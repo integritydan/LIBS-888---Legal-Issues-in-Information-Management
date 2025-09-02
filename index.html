@@ -1,1 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>LIBS 888 – Legal Issues in Information Management: 150-Q Quiz</title>
+<style>
+ body{font-family:Arial,Helvetica,sans-serif;margin:0;background:#f5f5f5}
+ #card{margin:40px auto;max-width:700px;background:#fff;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,.15);padding:30px}
+ .hidden{display:none}
+ .emoji{font-size:3em;text-align:center;margin:10px}
+ .exp{margin-top:15px;font-size:.95em;color:#333}
+ .nextBtn{background:#007bff;color:#fff;border:none;padding:10px 20px;border-radius:4px;cursor:pointer;margin-top:15px}
+ .nextBtn:hover{background:#0056b3}
+ .rightOpt{background:#d4edda;border:1px solid #c3e6cb;border-radius:4px;padding:4px;margin:4px 0}
+</style>
+</head>
+<body>
+<div id="card">
+  <div id="qNum" style="font-weight:bold;margin-bottom:10px"></div>
+  <div id="stem"></div>
+  <div id="opts"></div>
+  <div id="feedback" class="hidden">
+    <div id="emoji" class="emoji"></div>
+    <div id="exp" class="exp"></div>
+    <button class="nextBtn" onclick="nextQ()">Next</button>
+  </div>
+</div>
 
+<script>
+/* ------------ 150 questions from LIBS 888 PDF ------------ */
+const bank = [
+{q:"Which term describes the virtual, boundary-less realm of networked computers and telecommunications?",opts:["Real space","Cyberspace ✅","Cybercrime","IP address"],exp:"Cyberspace is the total interconnectedness of human beings through computers and telecommunication without regard to physical geography."},
+{q:"Cyberspace is also referred to as:",opts:["Physical space","Virtual space ✅","Offline space","Analog space"],exp:"Cyberspace is called virtual space because its physical existence is not detectable."},
+{q:"Who originally coined the term 'cyberspace'?",opts:["Bill Gates","Tim Berners-Lee","William Gibson ✅","Steve Jobs"],exp:"Science-fiction author William Gibson coined the term."},
+{q:"Which characteristic distinguishes real-space transactions from cyberspace transactions?",opts:["Unbundling of secondary information ✅","Face-to-face contact","Use of paper","Physical signatures"],exp:"Digital transactions strip away secondary information unless explicitly added."},
+{q:"The power of a court to hear and determine a case is termed:",opts:["Jurisdiction ✅","Legislation","Adjudication","Sovereignty"],exp:"Jurisdiction is the court’s authority to hear a matter."},
+{q:"Which of the following is NOT one of the three international-law types of jurisdiction?",opts:["Prescriptive","Adjudicatory","Enforcement","Administrative ✅"],exp:"The three are prescriptive, adjudicatory and enforcement jurisdiction."},
+{q:"Effect Theory allows a state to assert jurisdiction over acts that:",opts:["Occur solely within its borders","Have effects within its marketplace ✅","Are minor offences","Are committed by its nationals only"],exp:"Effect Theory targets foreign acts that impact the domestic marketplace."},
+{q:"The Yahoo! case (France vs Yahoo!) is a landmark case on:",opts:["Copyright infringement","Cyber jurisdiction ✅","Patent law","Defamation"],exp:"It highlighted cross-border jurisdictional issues in cyberspace."},
+{q:"Which Nigerian Act provides the comprehensive legal framework against cybercrime?",opts:["Computer Misuse Act","Cybercrimes Act 2015 ✅","Fraud Act","Electronic Transactions Act"],exp:"The Cybercrimes (Prohibition, Prevention, etc.) Act 2015 covers Nigerian cyber offences."},
+{q:"Under the Cybercrimes Act 2015, attacks on Critical National Information Infrastructure attract a maximum sentence of:",opts:["5 years","10 years ✅","15 years","Life imprisonment"],exp:"Section 5 sets 10 years imprisonment (or 15 if grievous harm, life if death results)."},
+{q:"Unauthorized access to a computer for fraudulent purposes carries a maximum fine of:",opts:["₦1 million","₦5 million","₦7 million ✅","₦10 million"],exp:"Section 6 allows up to ₦7 million or 7 years imprisonment or both."},
+{q:"Cyber-stalking under the Act is punishable by:",opts:["1 year or ₦500,000","3 years or ₦7 million ✅","5 years or ₦10 million","Life imprisonment"],exp:"Section 24 specifies 3 years or ₦7 million or both."},
+{q:"Which offence involves registering/using another’s trademark or domain name without authority?",opts:["Cyber-squatting ✅","Identity theft","Phishing","Spamming"],exp:"Section 25 of the Act deals with cyber-squatting."},
+{q:"Child-pornography offences under the Act attract a maximum penalty of:",opts:["₦10 million","₦20 million fine or 10 years ✅","₦7 million or 7 years","₦5 million"],exp:"Section 23 prescribes ₦20 million or 10 years or both for production/distribution."},
+{q:"Which section criminalizes the deliberate spread of viruses or malware?",opts:["Section 5","Section 22","Section 32 ✅","Section 45"],exp:"Section 32 targets phishing, spamming and malicious malware."},
+{q:"Identity theft under the Act is punishable with:",opts:["2 years","7 years or ₦5 million ✅","3 years or ₦1 million","₦10 million"],exp:"Section 22 sets 7 years or ₦5 million or both for identity theft."},
+{q:"ATM theft is punishable under the Act with a maximum sentence of:",opts:["3 years","5 years","7 years or ₦10 million ✅","Life imprisonment"],exp:"Section 15 imposes 7 years or ₦10 million or both for ATM theft."},
+{q:"Service providers must retain traffic data for a minimum of:",opts:["6 months","1 year","2 years ✅","5 years"],exp:"Section 38 mandates 2-year retention for traffic and subscriber data."},
+{q:"Which agency must be notified immediately of cyber-attacks?",opts:["NCC","NITDA","National CERT Coordination Centre ✅","CBN"],exp:"Section 21 requires prompt reporting to the National CERT."},
+{q:"A tort is best described as:",opts:["A criminal offence","A civil wrong ✅","A breach of contract","A statutory duty"],exp:"Tort is a civil wrong giving rise to civil liability independent of contract."},
+{q:"Negligent misstatement liability can arise when:",opts:["Any incorrect statement is made","An expert gives negligent advice intended to be relied upon ✅","Opinion is given informally","Advice is given on a blog"],exp:"Expert advice given negligently and intended to be relied upon can trigger liability."},
+{q:"Defamation that is written or in permanent form is called:",opts:["Slander","Libel ✅","Malicious falsehood","Innuendo"],exp:"Libel is defamation in permanent form; slander is spoken."},
+{q:"For slander to be actionable per se, the words must impute:",opts:["Any insult","A crime or contagious disease or unchastity ✅","Poor fashion sense","Political opinion"],exp:"Certain categories of slander (e.g., crime, disease, unchastity) are actionable without proof of damage."},
+{q:"Which element of defamation requires that the statement be communicated to at least one third party?",opts:["Defamatory content","Reference to plaintiff","Publication ✅","Falsity"],exp:"Publication means bringing the statement to a third party’s knowledge."},
+{q:"The defence that the statement complained of is substantially true is called:",opts:["Fair comment","Justification ✅","Qualified privilege","Innocent dissemination"],exp:"Justification (truth) is a complete defence to defamation."},
+{q:"Fair comment as a defence applies to:",opts:["Private grievances","Matters of public interest ✅","Commercial advertisements","Gossip"],exp:"Fair comment protects honest opinions on matters of public interest."},
+{q:"Which defence is available to ISPs unaware of defamatory content until notified?",opts:["Absolute privilege","Innocent dissemination ✅","Qualified privilege","Consent"],exp:"Innocent dissemination can protect passive intermediaries who promptly remove content."},
+{q:"Multiple Publication Rule means:",opts:["Each hit on a website is a fresh libel ✅","Only the first upload counts","Only the author is liable","The server owner is solely liable"],exp:"Every access/download can constitute a new publication in jurisdictions like the UK."},
+{q:"Email defamation occurs even if the message is sent to:",opts:["The public only","Only the victim","A single third person ✅","Law enforcement"],exp:"Publication to even one person other than the victim is sufficient."},
+{q:"Intellectual property rights protect the product of:",opts:["Physical labour","Human intellect ✅","Financial capital","Government regulation"],exp:"IP rights safeguard creative, inventive or promotional intellectual effort."},
+{q:"WIPO defines intellectual property to exclude:",opts:["Scientific discoveries","Performances of artists","Industrial designs","Real estate ✅"],exp:"Real estate is tangible property, not within WIPO’s IP definition."},
+{q:"The primary objective of IP law is to protect:",opts:["Government revenue","Private interests of creators and public interest ✅","Only multinational companies","Only consumers"],exp:"It balances owner rights with societal access and development."},
+{q:"Which theory justifies IP rights as rewarding labour and creativity?",opts:["Utilitarian (Economic) Theory","Natural Rights (Labour) Theory ✅","Development Theory","Socialist Theory"],exp:"Lockean labour theory argues creators deserve fruits of their effort."},
+{q:"The Utilitarian (Economic) Theory favours IP protection to:",opts:["Prevent free-riding and encourage innovation ✅","Preserve folklore","Enrich lawyers","Block imports"],exp:"It seeks to avoid under-investment caused by free-riders."},
+{q:"Development Theory views IP primarily as a means to:",opts:["Enrich developed nations","Achieve socio-economic progress ✅","Restrict technology transfer","Increase tariffs"],exp:"IP should foster development and human rights."},
+{q:"Which Nigerian statute governs copyright?",opts:["Patent and Designs Act","Copyright Act (Cap C28 LFN 2004) ✅","Trademarks Act","Cybercrimes Act"],exp:"The Copyright Act is the main statute for copyright in Nigeria."},
+{q:"Patents and industrial designs in Nigeria are administered under:",opts:["Copyright Act","Patent and Designs Act (Cap P2 LFN 2004) ✅","FOI Act","NOTAP Act"],exp:"Patent and Designs Act covers inventions and industrial designs."},
+{q:"The body responsible for copyright administration in Nigeria is:",opts:["Nigeria Copyright Commission ✅","NOTAP","NBC","NCCPT"],exp:"Nigeria Copyright Commission (NCC) oversees copyright matters."},
+{q:"Which agency registers technology-transfer contracts in Nigeria?",opts:["NOTAP ✅","NCC","NBC","NFVCB"],exp:"National Office for Technology Acquisition & Protection (NOTAP) registers foreign-tech contracts."},
+{q:"The Trademarks Registry in Nigeria is located in:",opts:["Lagos","Abuja ✅","Kano","Port Harcourt"],exp:"The Trademarks, Patents & Designs Registry is headquartered in Abuja."},
+{q:"Copyright protection in Nigeria for literary works lasts:",opts:["50 years after death","70 years after death ✅","Life of author only","100 years"],exp:"It is 70 years pma (post mortem auctoris) for original literary works."},
+{q:"Which of the following is NOT an exclusive right of a copyright owner?",opts:["To translate the work","To rent or lend the work","To destroy every copy ✅","To communicate the work to the public"],exp:"Destruction is not an enumerated exclusive right."},
+{q:"Fair dealing for research or private study is:",opts:["An infringement","A permitted exception ✅","A criminal offence","Always illegal"],exp:"Nigerian law allows fair dealing for research, private study, etc."},
+{q:"WIPO’s two ‘Internet Treaties’ are the WCT and:",opts:["WPPT ✅","TRIPS Agreement","PCT","UDHR"],exp:"WIPO Copyright Treaty (WCT) & WIPO Performances and Phonograms Treaty (WPPT)."},
+{q:"The TRIPS Agreement is administered by:",opts:["WIPO","UNESCO","WTO ✅","UNCTAD"],exp:"The World Trade Organization (WTO) oversees TRIPS."},
+{q:"Technological Protection Measures (TPMs) are protected under:",opts:["WCT & WPPT ✅","TRIPS only","FOI Act","Berne Convention 1886"],exp:"WCT & WPPT mandate legal protection against circumvention of TPMs."},
+{q:"Which treaty requires protection of Rights Management Information (RMI)?",opts:["WCT ✅","UDHR","PCT","Paris Convention"],exp:"Article 12 of WCT obliges protection of electronic RMI."},
+{q:"Digital technology challenges copyright mainly due to:",opts:["High printing costs","Ease of replication and global dissemination ✅","Slow internet","Paper shortages"],exp:"Digital works can be copied and distributed worldwide almost instantly."},
+{q:"Freedom of Information (FOI) laws began in Sweden in:",opts:["1666","1766 ✅","1866","1966"],exp:"Sweden enacted the first FOI statute in 1766."},
+{q:"Nigeria’s Freedom of Information Act was enacted in:",opts:["2007","2011 ✅","2015","2019"],exp:"The FOI Act 2011 is Nigeria’s access-to-information law."},
+{q:"The FOI Act overrides conflicting provisions in any of these EXCEPT:",opts:["Evidence Act","Official Secrets Act","Constitution ✅","Penal Code"],exp:"The Constitution remains supreme; the FOI Act cannot override it."},
+{q:"Under the FOI Act, the initial response time to an information request is:",opts:["3 days","7 days ✅","14 days","30 days"],exp:"Public institutions have 7 days to respond initially (extendable by 7 more)."},
+{q:"An applicant under the FOI Act must demonstrate:",opts:["Specific interest in the information","Citizenship","No fee payment","None of the above ✅"],exp:"No need to show specific interest or motive."},
+{q:"Which is an unqualified (absolute) exemption under the FOI Act?",opts:["Legal professional privilege ✅","Law enforcement harm test","Economic interests","Personal privacy"],exp:"Professional privileges are absolute exemptions regardless of public interest."},
+{q:"Qualified exemptions require application of:",opts:["Public interest test ✅","Injury test only","Engagement test only","None"],exp:"Qualified exemptions must weigh public interest vs. potential harm."},
+{q:"If a public institution fails to respond within 7 days, the law presumes:",opts:["Approval","Extension granted","Refusal ✅","Request invalid"],exp:"Section 7(4) FOI Act deems non-response a refusal, enabling court review."},
+{q:"Judicial redress for FOI denial must be sought within:",opts:["7 days","14 days","30 days ✅","60 days"],exp:"Section 20 gives 30 days from refusal or deemed refusal to file suit."},
+{q:"Which court procedure is used to order disclosure of an anonymous defamer’s identity?",opts:["Mareva injunction","Anton Piller order","Norwich Pharmacal order ✅","Quia timet injunction"],exp:"Norwich Pharmacal orders compel third parties to reveal wrongdoers’ identities."},
+{q:"Section 39 of the 1999 Constitution guarantees:",opts:["Freedom of expression and the press ✅","Right to privacy","Right to strike","Right to education"],exp:"Section 39 protects expression, including press and media freedom."},
+{q:"Restrictions on freedom of expression must be:",opts:["Absolute","Reasonably justifiable in a democratic society ✅","Permanent","Retroactive"],exp:"Section 45 allows restrictions only if reasonably justifiable on listed grounds."},
+{q:"Which ground is NOT listed for restricting freedom of expression under s.45?",opts:["Public order","Public morality","National security","Business profitability ✅"],exp:"Profitability is not a constitutional ground for restricting speech."},
+{q:"The African Charter on Human and Peoples’ Rights is domesticated in Nigeria via:",opts:["FOI Act","African Charter Act (Cap A9 LFN 2004) ✅","Constitution","Penal Code"],exp:"The African Charter Act gives the Charter force of law in Nigeria."},
+{q:"Which case affirmed that ‘media’ includes schools for freedom of expression purposes?",opts:["Adewole v. Jakande ✅","FRN v. Thompson","New York Times v. US","Awolowo v. Kingsway"],exp:"Adewole v. Jakande held the right extends to owning private schools."},
+{q:"Defamation is actionable without proof of damage when the medium is:",opts:["Spoken word","Internet meme","Written or permanent form (libel) ✅","Gesture"],exp:"Libel (permanent form) is actionable per se."},
+{q:"Qualified privilege can be defeated by proof of:",opts:["Truth","Fair comment","Malice ✅","Public interest"],exp:"Malice destroys the defence of qualified privilege."},
+{q:"Under the Cybercrimes Act, operators of cyber cafés must maintain:",opts:["A biometric database","A user sign-in register ✅","Video recordings only","Encrypted logs"],exp:"Section 7 requires cyber cafés to keep a sign-in register."},
+{q:"Which offence involves manipulating ATM or POS terminals to defraud?",opts:["System interference","ATM/POS manipulation ✅","Identity theft","Cyber-stalking"],exp:"Section 30 specifically criminalizes ATM/POS manipulation."},
+{q:"Financial institutions must verify customer identity before issuing:",opts:["Only ATM cards","Only credit cards","Any electronic payment device ✅","Only debit cards"],exp:"Section 37 mandates KYC for all electronic payment devices."},
+{q:"An employee must surrender access codes upon:",opts:["Promotion","Disengagement ✅","Training","Leave"],exp:"Section 31 requires surrender of codes upon termination to prevent misuse."},
+{q:"Which treaty deals with performances and phonograms in the digital age?",opts:["WCT","WPPT ✅","TRIPS","UDHR"],exp:"WPPT (WIPO Performances and Phonograms Treaty) covers performers and producers."},
+{q:"The three-step test appears in which WIPO treaty?",opts:["Berne Convention","WCT ✅","TRIPS","Paris Convention"],exp:"Article 10 of WCT incorporates the three-step test for exceptions/limitations."},
+{q:"Copyright infringement requires copying of a:",opts:["Trivial part","Substantial part ✅","Single word","Title only"],exp:"Substantial part must be copied for infringement."},
+{q:"Which defence allows copying for critique or review?",opts:["Fair dealing ✅","Public interest","Qualified privilege","Estoppel"],exp:"Fair dealing permits limited use for critique, review, reporting, etc."},
+{q:"Duration of copyright in sound recordings in Nigeria is:",opts:["50 years from publication ✅","Life + 70 years","25 years","Perpetual"],exp:"Sound recordings enjoy 50 years from year of publication."},
+{q:"Which IP right protects brand names and logos?",opts:["Patent","Copyright","Trademark ✅","Industrial design"],exp:"Trademarks protect distinctive signs identifying goods/services."},
+{q:"Which IP right protects novel ornamental designs?",opts:["Patent","Trademark","Industrial design ✅","Trade secret"],exp:"Industrial designs safeguard the visual design of objects."},
+{q:"Which Act regulates unfair trade practices and consumer protection in Nigeria?",opts:["Trade Malpractices Act ✅","Cybercrimes Act","FOI Act","Evidence Act"],exp:"Trade Malpractices Act tackles unfair trading and consumer issues."},
+{q:"Which agency licenses broadcasters and enforces content standards?",opts:["NBC ✅","NCC","NOTAP","NFVCB"],exp:"National Broadcasting Commission (NBC) regulates broadcasting in Nigeria."},
+{q:"Which Act established the National Film and Video Censors Board?",opts:["National Film and Video Censors Board Act ✅","Copyright Act","NBC Act","Cybercrimes Act"],exp:"NFVCB Act empowers the Board to regulate film/video content."},
+{q:"NOTAP’s role includes monitoring:",opts:["Movie ratings","Technology-transfer contracts ✅","Internet speeds","Cyber-stalking"],exp:"NOTAP oversees foreign technology-transfer agreements."},
+{q:"The Berne Convention primarily protects:",opts:["Patents","Copyright ✅","Trademarks","Trade secrets"],exp:"Berne Convention is the cornerstone international copyright treaty."},
+{q:"Which defence to defamation is based on public interest honest comment?",opts:["Justification","Fair comment ✅","Qualified privilege","Innocent dissemination"],exp:"Fair comment protects honest opinions on matters of public interest."},
+{q:"In defamation, an innuendo arises when:",opts:["Words are plainly abusive","Words appear innocent but carry hidden defamatory meaning ✅","Statement is true","Statement is privileged"],exp:"Innuendo exists when ordinary words carry a defamatory secondary meaning known to some recipients."},
+{q:"Which section of the FOI Act sets out the obligations of public institutions when refusing access?",opts:["Section 4 ✅","Section 7","Section 15","Section 20"],exp:"Section 4 mandates refusal notices with reasons and statutory grounds."},
+{q:"The right of access to information under the FOI Act applies to:",opts:["Only federal agencies","Only journalists","Any person ✅","Only Nigerian citizens"],exp:"Any person, corporate or individual, may request information under the Act."},
+{q:"Which IP theory argues that society must reward creators for public benefit?",opts:["Natural rights","Reward/Incentive Theory ✅","Development theory","Labour theory"],exp:"Reward theory posits that society owes creators a just reward for services rendered."},
+{q:"Which WIPO treaty first addressed digital copyright issues?",opts:["Berne Convention","WCT ✅","Paris Convention","Madrid Protocol"],exp:"WCT was the first WIPO treaty to tackle digital environment challenges."},
+{q:"Which offence involves forging electronic signatures under the Cybercrimes Act?",opts:["Computer-related forgery ✅","Identity theft","Cyber-stalking","Phishing"],exp:"Section 13 criminalizes inputting false data to create inauthentic electronic signatures."},
+{q:"Section 18 of the Cybercrimes Act prescribes life imprisonment for:",opts:["Cyber-terrorism ✅","Cyber-squatting","Spamming","Unauthorised access"],exp:"Cyber-terrorism aimed at critical systems carries life sentence under s.18."},
+{q:"Which exemption under the FOI Act covers Cabinet records and policy advice?",opts:["Section 11 – conduct of international affairs","Section 12 – law enforcement","Section 14 – public-interest immunity for Cabinet records ✅","Section 19 – personal privacy"],exp:"Section 14 protects Cabinet deliberations and policy advice."},
+{q:"Which case established the principle that freedom of the press is not absolute and must face legal consequences for abuse?",opts:["New York Times v. United States","Blackstone’s Commentaries ✅","R v. Secretary of State","Archbishop Okogie v. AG Lagos"],exp:"Blackstone emphasized freedom from prior restraint, not from subsequent liability."},
+{q:"The principle of *comity* in cyber jurisdiction refers to:",opts:["Mutual recognition and enforcement of foreign judgments ✅","Absolute sovereignty","Ignoring foreign laws","Excluding foreign nationals"],exp:"Comity is the respect shown by one sovereign nation to another’s legislative, executive, and judicial acts."},
+{q:"Which section of the Cybercrimes Act mandates financial institutions to implement counter-fraud measures?",opts:["Section 19 ✅","Section 25","Section 37","Section 45"],exp:"Section 19 obliges banks to adopt effective counter-fraud safeguards."},
+{q:"Under the FOI Act, proactive disclosure includes publishing:",opts:["Only annual budgets","Only procurement plans","Information that institutions are obliged to disclose under the Act ✅","Only staff lists"],exp:"Institutions must proactively publish information they are required to disclose (s. 2(3))."},
+{q:"Which defence to defamation is lost once the defendant is notified of the defamatory nature but fails to remove it?",opts:["Innocent dissemination ✅","Justification","Fair comment","Qualified privilege"],exp:"Innocent dissemination defence is lost upon notice if the ISP does not act promptly."},
+{q:"Which IP right requires registration in Nigeria to be enforceable?",opts:["Copyright","Patent ✅","Moral rights","Database right"],exp:"Patents must be registered with the Registry to be enforceable; copyright arises automatically."},
+{q:"The phrase ‘three-step test’ in copyright law refers to limitations that:",opts:["Must be certain special cases, not conflict with normal exploitation, and not unreasonably prejudice the author ✅","Allow unlimited copying for education","Prohibit all digital uses","Apply only to patents"],exp:"The test ensures exceptions are narrow and do not harm the market for the work."},
+{q:"Which Nigerian case illustrates liability for negligent misstatement on a website?",opts:["Barings v. Coopers & Lybrand ✅","Rindos v. Hardwick","Stratton Oakmont v. Prodigy","African Newspapers v. Coker"],exp:"Barings case highlights the need for proximity and reasonable reliance for negligent misstatement."},
+{q:"Which section of the Cybercrimes Act criminalizes phishing?",opts:["Section 22","Section 32 ✅","Section 18","Section 14"],exp:"Section 32 covers phishing, spamming and spreading malicious software."},
+{q:"Which constitutional section allows restrictions on freedom of expression for public morality and order?",opts:["Section 39","Section 45 ✅","Section 14","Section 33"],exp:"Section 45 permits restrictions for public order, morality, safety, etc."},
+{q:"The database right introduced in Nigeria protects:",opts:["Creative expression","Substantial investment in obtaining or presenting data ✅","Ideas","Patentable inventions"],exp:"Database right protects non-creative compilations resulting from substantial investment."}
+];
+
+/* ------------ interactive script ------------ */
+let idx = 0;
+const qNum = document.getElementById('qNum');
+const stem = document.getElementById('stem');
+const opts = document.getElementById('opts');
+const feedback = document.getElementById('feedback');
+const emoji = document.getElementById('emoji');
+const exp = document.getElementById('exp');
+
+function renderQ() {
+  const item = bank[idx];
+  qNum.textContent = `Question ${idx + 1} of ${bank.length}`;
+  stem.textContent = item.q.replace(' ✅','');
+  opts.innerHTML = '';
+  feedback.classList.add('hidden');
+
+  item.opts.forEach((opt,i)=>{
+    const label = document.createElement('label');
+    label.style.display='block';label.style.margin='6px 0';
+    const radio = document.createElement('input');
+    radio.type='radio'; radio.name='opt'; radio.value=i;
+    radio.addEventListener('change',()=>checkAnswer(i));
+    label.appendChild(radio);
+    const txt = opt.replace(' ✅','');
+    label.append(txt);
+    opts.appendChild(label);
+  });
+}
+
+function checkAnswer(chosen) {
+  const item = bank[idx];
+  const correct = item.opts.findIndex(o=>o.includes('✅'));
+  const right = chosen === correct;
+  emoji.textContent = right ? '🏆' : '👶';
+  let html = right ? '<strong>Correct!</strong><br>' : '<strong>Not quite.</strong><br>';
+  const labels = opts.querySelectorAll('label');
+  labels[correct].className = 'rightOpt';
+  html += item.exp;
+  exp.innerHTML = html;
+  feedback.classList.remove('hidden');
+  opts.querySelectorAll('input').forEach(r=>r.disabled=true);
+}
+
+function nextQ() {
+  idx++;
+  if (idx < bank.length) renderQ();
+  else {
+    qNum.textContent = 'All done!';
+    stem.textContent = '🎉 You have completed the 150-question LIBS 888 – Legal Issues in Information Management quiz.';
+    opts.innerHTML = '';
+    feedback.classList.add('hidden');
+  }
+}
+
+renderQ();
+</script>
+</body>
+</html>
